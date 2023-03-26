@@ -18,24 +18,31 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="abg-pk-S95">
-                                <rect key="frame" x="0.0" y="59" width="393" height="50"/>
+                                <rect key="frame" x="0.0" y="59" width="393" height="90"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DuB-0C-SNV">
-                                        <rect key="frame" x="310" y="7" width="75" height="35"/>
+                                        <rect key="frame" x="341" y="7" width="44" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="44" id="WYL-ug-ylc"/>
+                                            <constraint firstAttribute="height" constant="44" id="v1V-du-eqb"/>
+                                        </constraints>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Fa"/>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="PKJ-Y8-h1P"/>
+                                    <constraint firstAttribute="height" constant="90" id="PKJ-Y8-h1P"/>
                                     <constraint firstAttribute="trailing" secondItem="DuB-0C-SNV" secondAttribute="trailing" constant="8" id="Wkm-9P-v2m"/>
-                                    <constraint firstAttribute="bottom" secondItem="DuB-0C-SNV" secondAttribute="bottom" constant="8" id="XnD-dM-Wjd"/>
                                     <constraint firstItem="DuB-0C-SNV" firstAttribute="top" secondItem="abg-pk-S95" secondAttribute="top" constant="7" id="umi-y2-LJ2"/>
                                 </constraints>
                             </view>
+                            <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="ASG-rA-YTa">
+                                <rect key="frame" x="10" y="59" width="307" height="56"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="04I-V5-Jb4">
-                                <rect key="frame" x="0.0" y="109" width="393" height="709"/>
+                                <rect key="frame" x="0.0" y="149" width="393" height="669"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                         </subviews>
@@ -43,15 +50,19 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="abg-pk-S95" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="3Zl-fn-igd"/>
+                            <constraint firstItem="ASG-rA-YTa" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="10" id="3bK-9Z-Yqf"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="04I-V5-Jb4" secondAttribute="bottom" id="I3I-lm-Pw3"/>
+                            <constraint firstAttribute="trailing" secondItem="ASG-rA-YTa" secondAttribute="trailing" constant="76" id="K6M-58-88f"/>
                             <constraint firstItem="04I-V5-Jb4" firstAttribute="top" secondItem="abg-pk-S95" secondAttribute="bottom" id="Moy-mW-n9v"/>
                             <constraint firstItem="abg-pk-S95" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="TUo-e0-oZ4"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="04I-V5-Jb4" secondAttribute="trailing" id="dSm-q3-l9B"/>
                             <constraint firstItem="04I-V5-Jb4" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="wWh-3m-RCe"/>
+                            <constraint firstItem="ASG-rA-YTa" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="x2j-Qd-zGr"/>
                             <constraint firstItem="abg-pk-S95" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="y1u-gq-atV"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="searchBar" destination="ASG-rA-YTa" id="pGM-3r-Uue"/>
                         <outlet property="tableView" destination="04I-V5-Jb4" id="XlQ-XL-2eN"/>
                     </connections>
                 </viewController>

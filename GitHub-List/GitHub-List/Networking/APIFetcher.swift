@@ -36,7 +36,7 @@ class APIFetcher {
                     viewDelegate?.showProgress(false)
                 case .success(let value):
                     viewDelegate?.showProgress(false)
-                    viewDelegate?.showResult(repositories: value)
+                    viewDelegate?.showResult(repositories: value.items)
             }
         }
     }

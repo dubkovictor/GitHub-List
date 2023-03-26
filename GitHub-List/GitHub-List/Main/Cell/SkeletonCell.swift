@@ -9,17 +9,17 @@ import UIKit
 
 class SkeletonCell: UITableViewCell {
 
+    @IBOutlet weak var shimmerView: UIView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-        
-        self.contentView.backgroundColor = .yellow
+        shimmerView.layer.cornerRadius = 10
+        shimmerView.startShimmeringAnimation()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
     }
     
 }

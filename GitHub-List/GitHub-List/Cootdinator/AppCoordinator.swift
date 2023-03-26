@@ -24,8 +24,13 @@ class AppCoordinator: Coordinator {
     func openAuthVC() {
         let vc = AppStoryboard.mainViewController.viewController(vc: MainViewController.self)
         vc.coordinator = self
-        
         navigationController.pushViewController(vc, animated: false)
+    }
+    
+    func openDetailsVC(repo: Repository) {
+        let vc = AppStoryboard.detailsViewController.viewController(vc: DetailsViewController.self)
+        vc.repo = repo
+        navigationController.pushViewController(vc, animated: true)
     }
     
 }

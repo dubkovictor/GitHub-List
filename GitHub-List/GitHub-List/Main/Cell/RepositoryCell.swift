@@ -6,13 +6,30 @@
 //
 
 import UIKit
+import Kingfisher
 
 class RepositoryCell: UITableViewCell {
     
-    @IBOutlet weak var avatarImage: UIImageView!
+    private var downloadTask: DownloadTask?
+    
+    @IBOutlet weak var avatarImage: UIImageView! {
+        didSet {
+            avatarImage.contentMode = .scaleAspectFill
+        }
+    }
     @IBOutlet weak var nameLbl: UILabel!
     @IBOutlet weak var stars: UILabel!
     @IBOutlet weak var descriptionLbl: UILabel!
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        // Reset Thumbnail Image View
+        avatarImage.image = nil
+        
+        // Cancel Download Task
+        downloadTask?.cancel()
+    }
     
 
     override func awakeFromNib() {
@@ -22,14 +39,10 @@ class RepositoryCell: UITableViewCell {
 
     func configureWith(repo: Repository) {
         nameLbl.text = repo.name
-        stars.text = "stars = \(repo.stargazersCount)"
+        stars.text = "stars = \(repo.stargazersCount )"
         descriptionLbl.text = repo.description
-    }
-}
-
-extension UIView {
-    func setRounded() {
-        self.layer.cornerRadius = (self.frame.width / 2)
-        self.layer.masksToBounds = true
+        
+        downloadTask = KF.url( URL(string: repo.owner.avatarURL))
+            .set(to: avatarImage)
     }
 }

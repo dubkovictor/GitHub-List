@@ -18,13 +18,22 @@ class MainViewController: UIViewController {
     private var mainTableDataSource: MainTableDataSource!
     
     @IBOutlet weak var tableView: UITableView!
-
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.setViewDelegate(self)
         
         setupTableView()
         presenter.fetcher()
+        
+        searchBar.delegate = self
+        searchBar.searchTextField.delegate = self
+        
+//        searchBar.tintColor = .black
+//        searchBar.subviews[0].subviews.compactMap() { $0 as? UITextField }.first?.tintColor = UIColor.red
+//        
+//        searchBar.setImage(UIImage(), for: .search, state: .normal)
     }
     
     func setupTableView() {
@@ -43,8 +52,6 @@ class MainViewController: UIViewController {
         tableView.estimatedRowHeight = UITableView.automaticDimension
         tableView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
     }
-
-
 }
 
 extension MainViewController: MainViewDelegate {
@@ -53,20 +60,34 @@ extension MainViewController: MainViewDelegate {
     }
     
     func showProgress(show: Bool) {
-        
+        if show {
+            tableView.isScrollEnabled = false
+        } else {
+            tableView.isScrollEnabled = true
+        }
     }
     
     func showError(message: String) {
         
     }
+}
+
+extension MainViewController: UISearchBarDelegate, UITextFieldDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.count > 0 {
+            mainTableDataSource.filterForSearchText(searchText: searchText)
+        }
+    }
     
-    
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        mainTableDataSource.filterForSearchText(searchText: "")
+        return true
+    }
 }
 
 extension MainViewController: CatcherMainTableDataSource {
-    func didSelectListItem(_ index: IndexPath) {
-        print(index)
+    func didSelectListItem(_ repo: Repository) {
+        coordinator?.openDetailsVC(repo: repo)
     }
-    
     
 }

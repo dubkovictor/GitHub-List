@@ -33,16 +33,17 @@ var urlBase = URL(string: "https://api.github.com/search/repositories?sort=stars
 
 struct APIService: APIServiceProtocol {
     
-    func getRepositories(query: String, completion: @escaping (Result<[Repository], APIError>) -> Void) {
+    func getRepositories(query: String, completion: @escaping (Result<BaseResponse, APIError>) -> Void) {
         
-        AF.request(urlBase!, method: .get, encoding: JSONEncoding.prettyPrinted).responseDecodable(of: BaseResponse.self) { response in
+        AF.request(urlBase!, method: .get).responseDecodable(of: BaseResponse.self) { response in
             print(response.result)
             do {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 let res = try decoder.decode(BaseResponse.self, from: response.data!)
-                completion(Result.success(res.items))
+                completion(Result.success(res))
             } catch {
+                print(error)
                 completion(Result.failure(APIError.parsing(error as? DecodingError)))
             }
         }

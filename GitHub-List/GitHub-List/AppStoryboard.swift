@@ -10,6 +10,7 @@ import UIKit
 
 enum AppStoryboard : String {
     case mainViewController = "MainViewController"
+    case detailsViewController = "DetailsViewController"
 //    case secondViewController = "SecondViewController"
 //    case thirdViewController = "ThirdViewController"
     

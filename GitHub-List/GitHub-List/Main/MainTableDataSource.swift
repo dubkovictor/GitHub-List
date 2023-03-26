@@ -13,7 +13,7 @@ enum RepoCellType {
 }
 
 protocol CatcherMainTableDataSource: AnyObject {
-    func didSelectListItem(_ index: IndexPath)
+    func didSelectListItem(_ repo: Repository)
 }
 
 class MainTableDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
@@ -24,13 +24,20 @@ class MainTableDataSource: NSObject, UITableViewDataSource, UITableViewDelegate 
     
     var repos: [Repository] = []
     
+    var filteredRepositories = [Repository]()
+    
     var cellType: [RepoCellType] = [.skeleton, .skeleton, .skeleton, .skeleton]
+    
+    var query: String = ""
     
     init(tableView: UITableView) {
         self.tableView = tableView
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if filteredRepositories.count > 0 {
+            return filteredRepositories.count
+        }
         return cellType.count
     }
     
@@ -48,6 +55,14 @@ class MainTableDataSource: NSObject, UITableViewDataSource, UITableViewDelegate 
         tableView.reloadData()
     }
     
+    func filterForSearchText(searchText: String) {
+        filteredRepositories = repos.filter { repo in
+            let searchTextMatch = repo.name.lowercased().contains(searchText.lowercased())
+            return searchTextMatch
+        }
+        print(filteredRepositories.count)
+        tableView.reloadData()
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch cellType[indexPath.row] {
@@ -66,7 +81,7 @@ class MainTableDataSource: NSObject, UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        catcherController?.didSelectListItem(indexPath)
+        catcherController?.didSelectListItem(repos[indexPath.row])
     }
     
 }

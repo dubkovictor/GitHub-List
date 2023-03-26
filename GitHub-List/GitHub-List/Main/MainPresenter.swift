@@ -13,6 +13,8 @@ class MainPresenter {
     
     private var apiFetcher = APIFetcher()
     
+    var query: String = ""
+    
     func setViewDelegate(_ delegate: MainViewDelegate) {
         viewDelegate = delegate
     }
@@ -24,12 +26,6 @@ class MainPresenter {
     func fetcher() {
         apiFetcher.fetchRepositories(query: "222")
     }
-    
-    
-    
-    
-    
-    
 }
 
 extension MainPresenter: APIFetcherDelegate {
@@ -38,7 +34,7 @@ extension MainPresenter: APIFetcherDelegate {
     }
     
     func showProgress(_ show: Bool) {
-        
+        viewDelegate?.showProgress(show: show)
     }
     
     func showResult(repositories: [Repository]) {
