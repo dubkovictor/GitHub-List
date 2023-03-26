@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Details View Controller-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController storyboardIdentifier="DetailsViewController" id="Y6W-OH-hqX" customClass="DetailsViewController" customModule="GitHub_List" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UXM-ga-AMl">
+                                <rect key="frame" x="24" y="129" width="345" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wsm-7g-QHT">
+                                <rect key="frame" x="24" y="170" width="345" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KEb-N3-ZSe">
+                                <rect key="frame" x="24" y="211" width="345" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jIS-EV-ef6">
+                                <rect key="frame" x="40" y="262" width="313" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="YLW-d7-1Co"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Add to Favarite"/>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="UXM-ga-AMl" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="24" id="2x2-oI-nF4"/>
+                            <constraint firstItem="KEb-N3-ZSe" firstAttribute="top" secondItem="wsm-7g-QHT" secondAttribute="bottom" constant="20" id="8G9-5M-QMt"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="UXM-ga-AMl" secondAttribute="trailing" constant="24" id="Fqn-1Z-cMX"/>
+                            <constraint firstItem="wsm-7g-QHT" firstAttribute="leading" secondItem="UXM-ga-AMl" secondAttribute="leading" id="K5d-n3-ihN"/>
+                            <constraint firstItem="KEb-N3-ZSe" firstAttribute="trailing" secondItem="UXM-ga-AMl" secondAttribute="trailing" id="L6K-Y5-tSN"/>
+                            <constraint firstItem="KEb-N3-ZSe" firstAttribute="leading" secondItem="UXM-ga-AMl" secondAttribute="leading" id="LoQ-MA-VVQ"/>
+                            <constraint firstItem="wsm-7g-QHT" firstAttribute="top" secondItem="UXM-ga-AMl" secondAttribute="bottom" constant="20" id="Sj6-hn-Vkr"/>
+                            <constraint firstItem="UXM-ga-AMl" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="70" id="XRB-BZ-g8O"/>
+                            <constraint firstItem="jIS-EV-ef6" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="40" id="XwA-lx-DhK"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="jIS-EV-ef6" secondAttribute="trailing" constant="40" id="ZD6-cZ-zMC"/>
+                            <constraint firstItem="jIS-EV-ef6" firstAttribute="top" secondItem="KEb-N3-ZSe" secondAttribute="bottom" constant="30" id="lLD-bP-H1k"/>
+                            <constraint firstItem="wsm-7g-QHT" firstAttribute="trailing" secondItem="UXM-ga-AMl" secondAttribute="trailing" id="wwh-Hr-rnV"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="addToFavarite" destination="jIS-EV-ef6" id="WUU-ho-1ST"/>
+                        <outlet property="creationDateLbl" destination="KEb-N3-ZSe" id="RDJ-YQ-UoR"/>
+                        <outlet property="languageLbl" destination="UXM-ga-AMl" id="VX5-zJ-Vig"/>
+                        <outlet property="numberOfForksLbl" destination="wsm-7g-QHT" id="bJe-aG-fKf"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="138" y="-16"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
