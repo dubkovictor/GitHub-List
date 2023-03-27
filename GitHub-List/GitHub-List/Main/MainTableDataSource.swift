@@ -55,12 +55,23 @@ class MainTableDataSource: NSObject, UITableViewDataSource, UITableViewDelegate 
         tableView.reloadData()
     }
     
+    func resetFilter() {
+        filteredRepositories.removeAll()
+        setCells(repos: repos)
+    }
+    
     func filterForSearchText(searchText: String) {
         filteredRepositories = repos.filter { repo in
             let searchTextMatch = repo.name.lowercased().contains(searchText.lowercased())
             return searchTextMatch
         }
-        print(filteredRepositories.count)
+        
+        if filteredRepositories.count > 0 {
+            cellType.removeAll()
+            for item in filteredRepositories {
+                cellType.append(.repoCell(item))
+            }
+        }
         tableView.reloadData()
     }
     

@@ -46,3 +46,4 @@ class RepositoryCell: UITableViewCell {
             .set(to: avatarImage)
     }
 }
+

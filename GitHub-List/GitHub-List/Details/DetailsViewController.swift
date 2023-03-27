@@ -16,15 +16,22 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var nameLbl: UILabel!
     @IBOutlet weak var htmlUrlLbl: UILabel!
     
+    var isSaved = false
+    
     let presenter = DetailsPresenter()
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.setViewDelegate(self)
         
-        addToFavarite.addTarget(self, action: #selector(addToFavariteDidTap), for: .touchUpInside)
+        self.title = "Details"
+        
+        if isSaved {
+            addToFavarite.isHidden = true
+        } else {
+            addToFavarite.addTarget(self, action: #selector(addToFavariteDidTap), for: .touchUpInside)
+        }
+        
         setupUI()
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(htmlUrlDidTap))
@@ -39,18 +46,16 @@ class DetailsViewController: UIViewController {
         languageLbl.text = "Language: " + (presenter.repository?.language ?? "")
         numberOfForksLbl.text = "Number of forks: \(presenter.repository?.forksCount ?? 0)"
         creationDateLbl.text = "Creation date: " + (presenter.repository?.createdAt ?? "")
-        
     }
     
     @objc func addToFavariteDidTap() {
-        print("addToFavariteDidTap")
+        presenter.addToFavorite()
         
     }
     
     @objc func htmlUrlDidTap() {
         presenter.openSafary()
     }
-    
 }
 
 extension DetailsViewController: DetailsViewDelegate {

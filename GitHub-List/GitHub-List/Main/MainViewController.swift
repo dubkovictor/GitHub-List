@@ -28,6 +28,8 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         presenter.setViewDelegate(self)
         
+        self.title = "Details"
+        
         setupTableView()
         presenter.fetcher()
         
@@ -39,6 +41,9 @@ class MainViewController: UIViewController {
         dayBtn.addTarget(self, action: #selector(dayBtnDidTap), for: .touchUpInside)
         favoriteBtn.addTarget(self, action: #selector(favoriteBtnDidTap), for: .touchUpInside)
         
+        let tapGesture = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tapGesture)
+        tapGesture.cancelsTouchesInView = false
     }
     
     func setupTableView() {
@@ -72,7 +77,7 @@ class MainViewController: UIViewController {
     }
     
     @objc func favoriteBtnDidTap() {
-        
+        coordinator?.openFavoriteVC()
     }
 }
 
@@ -102,14 +107,14 @@ extension MainViewController: UISearchBarDelegate, UITextFieldDelegate {
     }
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        mainTableDataSource.filterForSearchText(searchText: "")
+        mainTableDataSource.resetFilter()
         return true
     }
 }
 
 extension MainViewController: CatcherMainTableDataSource {
     func didSelectListItem(_ repo: Repository) {
-        coordinator?.openDetailsVC(repo: repo)
+        coordinator?.openDetailsVC(repo: repo, isSaved: false)
     }
     
 }

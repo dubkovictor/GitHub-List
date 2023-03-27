@@ -11,8 +11,7 @@ import UIKit
 enum AppStoryboard : String {
     case mainViewController = "MainViewController"
     case detailsViewController = "DetailsViewController"
-//    case secondViewController = "SecondViewController"
-//    case thirdViewController = "ThirdViewController"
+    case favoriteViewController = "FavoriteViewController"
     
     var instance : UIStoryboard {
         return UIStoryboard(name: self.rawValue, bundle: Bundle.main)

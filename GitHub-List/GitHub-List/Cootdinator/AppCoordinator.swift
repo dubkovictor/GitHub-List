@@ -27,9 +27,18 @@ class AppCoordinator: Coordinator {
         navigationController.pushViewController(vc, animated: false)
     }
     
-    func openDetailsVC(repo: Repository) {
+    func openDetailsVC(repo: Repository, isSaved: Bool) {
         let vc = AppStoryboard.detailsViewController.viewController(vc: DetailsViewController.self)
         vc.presenter.repository = repo
+        vc.isSaved = isSaved
+        navigationController.navigationBar.topItem?.title = "Main"
+        navigationController.pushViewController(vc, animated: true)
+    }
+    
+    func openFavoriteVC() {
+        let vc = AppStoryboard.favoriteViewController.viewController(vc: FavoriteViewController.self)
+        vc.coordinator = self
+        navigationController.navigationBar.topItem?.title = "Main"
         navigationController.pushViewController(vc, animated: true)
     }
     
