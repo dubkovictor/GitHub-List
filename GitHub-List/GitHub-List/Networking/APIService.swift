@@ -8,35 +8,18 @@
 import Foundation
 import Alamofire
 
-var urlBase = "https://api.github.com/search/repositories?sort=stars&order=desc&page=1&q=created:"
-
-/*
- static let secureScheme = "https"
- static let githubHost = "api.github.com"
- static let searchReposPath = "/search/repositories"
- 
- static let searchQueryParamKey = "q"
- static let querySeparator = " "
- 
- static let sortQueryParamKey = "sort"
- static let sortSeparator = "="
- 
- static let pageQueryParamKey = "page"
- 
- // Search API query param keys
- static let stars = "stars"
- static let language = "language"
- 
- static let queryParamKey = "key"
- static let queryParamValue = "value"
- */
+var urlBase = "https://api.github.com/search/repositories?sort=stars&order=desc&"
 
 struct APIService: APIServiceProtocol {
     
-    func getRepositories(query: String, completion: @escaping (Result<BaseResponse, APIError>) -> Void) {
+    static let pageQueryPageKey = "page="
+    static let pageQueryCreatedKey = "q=created:"
+    
+    func getRepositories(pageNum: String, created: String, completion: @escaping (Result<BaseResponse, APIError>) -> Void) {
         
-        AF.request(URL(string: urlBase + query)!, method: .get).responseDecodable(of: BaseResponse.self) { response in
-            print(response.result)
+        let url = URL(string: urlBase + APIService.pageQueryPageKey + pageNum + "&" + APIService.pageQueryCreatedKey + created)!
+        print(url)
+        AF.request(url, method: .get).responseDecodable(of: BaseResponse.self) { response in
             do {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase

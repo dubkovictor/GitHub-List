@@ -27,9 +27,9 @@ class APIFetcher {
         viewDelegate = delegate
     }
     
-    func fetchRepositories(query: String) {
+    func fetchRepositories(pageNum: String, created: String) {
         viewDelegate?.showProgress(true)
-        service.getRepositories(query: query) { [unowned self] result in
+        service.getRepositories(pageNum: pageNum, created: created) { [unowned self] result in
             switch result {
                 case .failure(let error):
                     viewDelegate?.showError(message: error.localizedDescription)

@@ -9,5 +9,5 @@ import Foundation
 
 protocol APIServiceProtocol {
     
-    func getRepositories(query: String, completion: @escaping (Result<BaseResponse, APIError>) -> Void)
+    func getRepositories(pageNum: String, created: String, completion: @escaping (Result<BaseResponse, APIError>) -> Void)
 }

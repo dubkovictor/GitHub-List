@@ -83,7 +83,11 @@ class MainViewController: UIViewController {
 
 extension MainViewController: MainViewDelegate {
     func showRepos(repos: [Repository]) {
-        mainTableDataSource.setCells(repos: repos)
+        if mainTableDataSource.repos.count > 0 {
+            mainTableDataSource.updateData(repos: repos)
+        } else {
+            mainTableDataSource.setCells(repos: repos)
+        }
     }
     
     func showProgress(show: Bool) {
@@ -113,8 +117,13 @@ extension MainViewController: UISearchBarDelegate, UITextFieldDelegate {
 }
 
 extension MainViewController: CatcherMainTableDataSource {
+    
     func didSelectListItem(_ repo: Repository) {
         coordinator?.openDetailsVC(repo: repo, isSaved: false)
+    }
+    
+    func loadData() {
+        presenter.loadData()
     }
     
 }

@@ -23,8 +23,6 @@ extension UIView {
         self.layer.masksToBounds = true
     }
     
-   
-    
     func startShimmeringAnimation(animationSpeed: Float = 1.0,
                                   direction: Direction = .leftToRight,
                                   repeatCount: Float = MAXFLOAT) {

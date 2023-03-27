@@ -14,6 +14,7 @@ enum RepoCellType {
 
 protocol CatcherMainTableDataSource: AnyObject {
     func didSelectListItem(_ repo: Repository)
+    func loadData()
 }
 
 class MainTableDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
@@ -30,6 +31,8 @@ class MainTableDataSource: NSObject, UITableViewDataSource, UITableViewDelegate 
     
     var query: String = ""
     
+    var isLoading = false
+    
     init(tableView: UITableView) {
         self.tableView = tableView
     }
@@ -39,6 +42,18 @@ class MainTableDataSource: NSObject, UITableViewDataSource, UITableViewDelegate 
             return filteredRepositories.count
         }
         return cellType.count
+    }
+    
+    func updateData(repos: [Repository]) {
+        var cells: [RepoCellType] = []
+        for item in repos {
+            cells.append(.repoCell(item))
+        }
+        self.repos.append(contentsOf: repos)
+        cellType.append(contentsOf: cells)
+        print("load data finished")
+        tableView.reloadData()
+        isLoading = false
     }
     
     func setCells(repos: [Repository]) {
@@ -92,7 +107,17 @@ class MainTableDataSource: NSObject, UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard repos.count != 0 else { return }
         catcherController?.didSelectListItem(repos[indexPath.row])
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == cellType.count - 4 {
+            if !isLoading {
+                isLoading = true
+                print("load data")
+                catcherController?.loadData()
+            }
+        }
+    }
 }

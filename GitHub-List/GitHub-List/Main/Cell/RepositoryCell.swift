@@ -38,8 +38,8 @@ class RepositoryCell: UITableViewCell {
     }
 
     func configureWith(repo: Repository) {
-        nameLbl.text = repo.name
-        stars.text = "stars = \(repo.stargazersCount )"
+        nameLbl.text = "Name: " + repo.name
+        stars.text = "stars -> \(repo.stargazersCount )"
         descriptionLbl.text = repo.description
         
         downloadTask = KF.url( URL(string: repo.owner.avatarURL))

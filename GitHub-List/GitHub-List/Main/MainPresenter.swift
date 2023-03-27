@@ -19,7 +19,9 @@ class MainPresenter {
     
     private var apiFetcher = APIFetcher()
     
-    var dateQuery: String = ""
+    private var dateQuery: String = ""
+    
+    var pageNumber = 1
     
     func setViewDelegate(_ delegate: MainViewDelegate) {
         viewDelegate = delegate
@@ -31,7 +33,12 @@ class MainPresenter {
     }
     
     func fetcher() {
-        apiFetcher.fetchRepositories(query: dateQuery)
+        apiFetcher.fetchRepositories(pageNum: "\(pageNumber)", created: dateQuery)
+    }
+    
+    func loadData() {
+        pageNumber = pageNumber + 1
+        fetcher()
     }
     
     func lastMonthSelected() {
@@ -87,7 +94,6 @@ class MainPresenter {
         dateFormatter.dateFormat = "YYYY-MM-dd"
         return dateFormatter.string(from: date)
     }
-    
     
 }
 
