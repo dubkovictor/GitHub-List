@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-var urlBase = URL(string: "https://api.github.com/search/repositories?sort=stars&order=desc&page=1&q=created:2023-03-11..2023-03-12")
+var urlBase = "https://api.github.com/search/repositories?sort=stars&order=desc&page=1&q=created:"
 
 /*
  static let secureScheme = "https"
@@ -35,7 +35,7 @@ struct APIService: APIServiceProtocol {
     
     func getRepositories(query: String, completion: @escaping (Result<BaseResponse, APIError>) -> Void) {
         
-        AF.request(urlBase!, method: .get).responseDecodable(of: BaseResponse.self) { response in
+        AF.request(URL(string: urlBase + query)!, method: .get).responseDecodable(of: BaseResponse.self) { response in
             print(response.result)
             do {
                 let decoder = JSONDecoder()

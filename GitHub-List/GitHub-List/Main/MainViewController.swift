@@ -19,6 +19,10 @@ class MainViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var monthBtn: UIButton!
+    @IBOutlet weak var weekBtn: UIButton!
+    @IBOutlet weak var dayBtn: UIButton!
+    @IBOutlet weak var favoriteBtn: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,13 +34,15 @@ class MainViewController: UIViewController {
         searchBar.delegate = self
         searchBar.searchTextField.delegate = self
         
-//        searchBar.tintColor = .black
-//        searchBar.subviews[0].subviews.compactMap() { $0 as? UITextField }.first?.tintColor = UIColor.red
-//        
-//        searchBar.setImage(UIImage(), for: .search, state: .normal)
+        monthBtn.addTarget(self, action: #selector(monthBtnDidTap), for: .touchUpInside)
+        weekBtn.addTarget(self, action: #selector(weekBtnDidtap), for: .touchUpInside)
+        dayBtn.addTarget(self, action: #selector(dayBtnDidTap), for: .touchUpInside)
+        favoriteBtn.addTarget(self, action: #selector(favoriteBtnDidTap), for: .touchUpInside)
+        
     }
     
     func setupTableView() {
+        
         mainTableDataSource = MainTableDataSource(tableView: tableView)
         mainTableDataSource.catcherController = self
         tableView.contentInsetAdjustmentBehavior = .never
@@ -51,6 +57,22 @@ class MainViewController: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = UITableView.automaticDimension
         tableView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+    }
+    
+    @objc func monthBtnDidTap() {
+        presenter.lastMonthSelected()
+    }
+    
+    @objc func weekBtnDidtap() {
+        presenter.lastWeekSelected()
+    }
+    
+    @objc func dayBtnDidTap() {
+        presenter.lastDaySelected()
+    }
+    
+    @objc func favoriteBtnDidTap() {
+        
     }
 }
 

@@ -16,11 +16,13 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var nameLbl: UILabel!
     @IBOutlet weak var htmlUrlLbl: UILabel!
     
+    let presenter = DetailsPresenter()
     
-    var repo: Repository? // перенести в презентер
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter.setViewDelegate(self)
         
         addToFavarite.addTarget(self, action: #selector(addToFavariteDidTap), for: .touchUpInside)
         setupUI()
@@ -31,12 +33,12 @@ class DetailsViewController: UIViewController {
     }
     
     private func setupUI() {
-        htmlUrlLbl.text = repo?.htmlURL
+        htmlUrlLbl.text = presenter.repository?.htmlURL
         htmlUrlLbl.attributedText = htmlUrlLbl.text?.underLined
-        nameLbl.text = repo?.name
-        languageLbl.text = "Language: " + (repo?.language ?? "")
-        numberOfForksLbl.text = "Number of forks: \(repo?.forksCount ?? 0)"
-        creationDateLbl.text = "Creation date: " + (repo?.createdAt ?? "")
+        nameLbl.text = presenter.repository?.name
+        languageLbl.text = "Language: " + (presenter.repository?.language ?? "")
+        numberOfForksLbl.text = "Number of forks: \(presenter.repository?.forksCount ?? 0)"
+        creationDateLbl.text = "Creation date: " + (presenter.repository?.createdAt ?? "")
         
     }
     
@@ -46,9 +48,15 @@ class DetailsViewController: UIViewController {
     }
     
     @objc func htmlUrlDidTap() {
-        if let url = URL(string: repo?.htmlURL ?? "") {
+        presenter.openSafary()
+    }
+    
+}
+
+extension DetailsViewController: DetailsViewDelegate {
+    func openSafary(repository: Repository) {
+        if let url = URL(string: repository.htmlURL ?? "") {
             UIApplication.shared.open(url)
         }
     }
-    
 }

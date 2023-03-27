@@ -29,7 +29,7 @@ class AppCoordinator: Coordinator {
     
     func openDetailsVC(repo: Repository) {
         let vc = AppStoryboard.detailsViewController.viewController(vc: DetailsViewController.self)
-        vc.repo = repo
+        vc.presenter.repository = repo
         navigationController.pushViewController(vc, animated: true)
     }
     

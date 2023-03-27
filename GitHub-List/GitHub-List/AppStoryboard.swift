@@ -25,8 +25,3 @@ enum AppStoryboard : String {
 }
 
 
-extension UITableView {
-    func dequeue<T: UITableViewCell>(cellForRowAt indexPath: IndexPath) -> T {
-        return dequeueReusableCell(withIdentifier: "\(T.self)", for: indexPath) as! T
-    }
-}
