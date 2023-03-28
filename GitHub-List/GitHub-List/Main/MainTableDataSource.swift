@@ -29,6 +29,8 @@ class MainTableDataSource: NSObject, UITableViewDataSource, UITableViewDelegate 
     
     private var tableView: UITableView
     
+    var mode: Mode = .month
+    
     var currentRepo: [Repository] = []
     var dayRepos: [Repository] = []
     var weekRepos: [Repository] = []
@@ -37,6 +39,9 @@ class MainTableDataSource: NSObject, UITableViewDataSource, UITableViewDelegate 
     var filteredRepositories = [Repository]()
     
     var cellType: [RepoCellType] = [.skeleton, .skeleton, .skeleton, .skeleton]
+    var cellTypeMonth: [RepoCellType] = [.skeleton, .skeleton, .skeleton, .skeleton]
+    var cellTypeWeek: [RepoCellType] = [.skeleton, .skeleton, .skeleton, .skeleton]
+    var cellTypeDay: [RepoCellType] = [.skeleton, .skeleton, .skeleton, .skeleton]
     
     var query: String = ""
     
@@ -53,51 +58,73 @@ class MainTableDataSource: NSObject, UITableViewDataSource, UITableViewDelegate 
         return cellType.count
     }
     
-    func updateData(repos: [Repository], mode: Mode) {
-        var cells: [RepoCellType] = []
-        self.currentRepo.removeAll()
-        print(mode)
-        cellType.removeAll()
-        switch mode {
-            case .month:
-                monthRepos.append(contentsOf: repos)
-                self.currentRepo = monthRepos
-            case .week:
-                weekRepos.append(contentsOf: repos)
-                self.currentRepo = weekRepos
-            case .day:
-                dayRepos.append(contentsOf: repos)
-                self.currentRepo = dayRepos
+    func setMonthCells(repos: [Repository]) {
+        if monthRepos.count == 0 {
+            cellTypeMonth.removeAll()
         }
-        
-        for item in self.currentRepo {
-            cells.append(.repoCell(item))
+    
+        monthRepos = repos
+        currentRepo = monthRepos
+        if repos.count > 0 {
+            for item in repos {
+                cellTypeMonth.append(.repoCell(item))
+            }
         }
-        
-        cellType.append(contentsOf: cells)
-        
-        print("load data finished")
-        
+        mode = .month
+        cellType = cellTypeMonth
         tableView.reloadData()
         
         isLoading = false
     }
     
-    func setCells(repos: [Repository]) {
-        cellType.removeAll()
-        self.currentRepo = repos
+    func setWeekCells(repos: [Repository]) {
+        if weekRepos.count == 0 {
+            cellTypeWeek.removeAll()
+        }
         
+        weekRepos = repos
+        currentRepo = weekRepos
         if repos.count > 0 {
             for item in repos {
-                cellType.append(.repoCell(item))
+                cellTypeWeek.append(.repoCell(item))
             }
         }
+        mode = .week
+        cellType = cellTypeWeek
         tableView.reloadData()
+        
+        isLoading = false
     }
     
+    func setDayCells(repos: [Repository]) {
+        if dayRepos.count == 0 {
+            cellTypeDay.removeAll()
+        }
+        
+        dayRepos = repos
+        currentRepo = dayRepos
+        if repos.count > 0 {
+            for item in repos {
+                cellTypeDay.append(.repoCell(item))
+            }
+        }
+        mode = .day
+        cellType = cellTypeDay
+        tableView.reloadData()
+        
+        isLoading = false
+    }
+
     func resetFilter() {
         filteredRepositories.removeAll()
-        setCells(repos: currentRepo)
+        switch mode {
+            case .month:
+                setMonthCells(repos: currentRepo)
+            case .week:
+                setWeekCells(repos: currentRepo)
+            case .day:
+                setDayCells(repos: currentRepo)
+        }
     }
     
     func filterForSearchText(searchText: String) {

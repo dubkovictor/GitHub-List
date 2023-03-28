@@ -116,18 +116,18 @@
 		57A3198129CE026A0092A8DE /* GitHub-List */ = {
 			isa = PBXGroup;
 			children = (
-				57CB044D29D1CAF9006CD07F /* Favorite */,
 				57A3199E29D046480092A8DE /* Cootdinator */,
 				57CB042F29D09E89006CD07F /* Networking */,
 				57CB042229D08912006CD07F /* Model */,
 				57A319A329D049BA0092A8DE /* Main */,
 				57CB043829D0C9F1006CD07F /* Details */,
+				57CB044D29D1CAF9006CD07F /* Favorite */,
 				57A3198B29CE026B0092A8DE /* Assets.xcassets */,
 				57A3198D29CE026B0092A8DE /* LaunchScreen.storyboard */,
 				57A3199A29D044640092A8DE /* AppStoryboard.swift */,
 				57A3198229CE026A0092A8DE /* AppDelegate.swift */,
-				57A3199029CE026B0092A8DE /* Info.plist */,
 				57CB044029D0F861006CD07F /* UIview+GithubList.swift */,
+				57A3199029CE026B0092A8DE /* Info.plist */,
 			);
 			path = "GitHub-List";
 			sourceTree = "<group>";

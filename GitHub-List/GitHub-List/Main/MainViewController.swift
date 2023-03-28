@@ -108,11 +108,20 @@ class MainViewController: UIViewController {
 
 extension MainViewController: MainViewDelegate {
     func showRepos(repos: [Repository]) {
-        if mainTableDataSource.currentRepo.count > 0 {
-            mainTableDataSource.updateData(repos: repos, mode: mode)
-        } else {
-            mainTableDataSource.setCells(repos: repos)
+        
+        switch mode {
+            case .month:
+                mainTableDataSource.setMonthCells(repos: repos)
+            case .week:
+                mainTableDataSource.setWeekCells(repos: repos)
+            case .day:
+                mainTableDataSource.setDayCells(repos: repos)
         }
+//        if mainTableDataSource.currentRepo.count > 0 {
+//            mainTableDataSource.updateData(repos: repos, mode: mode)
+//        } else {
+//            mainTableDataSource.setCells(repos: repos)
+//        }
     }
     
     func showProgress(show: Bool) {
