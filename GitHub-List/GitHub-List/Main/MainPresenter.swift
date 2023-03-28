@@ -21,7 +21,12 @@ class MainPresenter {
     
     private var dateQuery: String = ""
     
-    var pageNumber = 1
+    private var currentRange: Range = .month
+    
+    private var currentPageNumber = 1
+    private var pageNumberMonth = 1
+    private var pageNumberWeek = 1
+    private var pageNumberDay = 1
     
     func setViewDelegate(_ delegate: MainViewDelegate) {
         viewDelegate = delegate
@@ -29,29 +34,43 @@ class MainPresenter {
     
     init() {
         apiFetcher.setViewDelegate(self)
-        lastMonthSelected()
     }
     
     func fetcher() {
-        apiFetcher.fetchRepositories(pageNum: "\(pageNumber)", created: dateQuery)
+        apiFetcher.fetchRepositories(pageNum: "\(currentPageNumber)", created: dateQuery)
     }
     
     func loadData() {
-        pageNumber = pageNumber + 1
+        
+        switch currentRange {
+            case .month:
+                pageNumberMonth = pageNumberMonth + 1
+                currentPageNumber = pageNumberMonth
+            case .week:
+                pageNumberWeek = pageNumberWeek + 1
+                currentPageNumber = pageNumberWeek
+            case .day:
+                pageNumberDay = pageNumberDay + 1
+                currentPageNumber = pageNumberDay
+        }
+        
         fetcher()
     }
     
     func lastMonthSelected() {
+        currentRange = .month
         dateQuery = dateRange(range: .month) + ".." + today()
         fetcher()
     }
     
     func lastWeekSelected() {
+        currentRange = .week
         dateQuery = dateRange(range: .week) + ".." + today()
         fetcher()
     }
     
     func lastDaySelected() {
+        currentRange = .day
         dateQuery = dateRange(range: .day) + ".." + today()
         fetcher()
     }
@@ -94,12 +113,11 @@ class MainPresenter {
         dateFormatter.dateFormat = "YYYY-MM-dd"
         return dateFormatter.string(from: date)
     }
-    
 }
 
 extension MainPresenter: APIFetcherDelegate {
     func showError(message: String) {
-        
+        viewDelegate?.showError(message: message)
     }
     
     func showProgress(_ show: Bool) {

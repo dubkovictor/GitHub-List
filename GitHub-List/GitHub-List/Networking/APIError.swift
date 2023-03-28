@@ -13,6 +13,7 @@ enum APIError: Error, CustomStringConvertible {
     case url(URLError?)
     case parsing(DecodingError?)
     case unknown
+    case connection
     
     var localizedDescription: String {
         // user feedback
@@ -23,6 +24,8 @@ enum APIError: Error, CustomStringConvertible {
                 return "Sorry, the connection to our server failed."
             case .url(let error):
                 return error?.localizedDescription ?? "Something went wrong."
+            case .connection:
+                return "Lost Network connection"
         }
     }
     
@@ -37,6 +40,9 @@ enum APIError: Error, CustomStringConvertible {
                 return "parsing error \(error?.localizedDescription ?? "")"
             case .badResponse(statusCode: let statusCode):
                 return "bad response with status code \(statusCode)"
+            case .connection:
+                return "Lost Network connection"
+                
         }
     }
 }

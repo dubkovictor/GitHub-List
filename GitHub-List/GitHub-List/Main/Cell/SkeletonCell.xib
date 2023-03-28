@@ -26,7 +26,7 @@
                         </constraints>
                     </view>
                 </subviews>
-                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="w6m-WZ-pbr" secondAttribute="trailing" constant="16" id="7CC-q7-CN9"/>
                     <constraint firstAttribute="bottom" secondItem="w6m-WZ-pbr" secondAttribute="bottom" constant="4" id="VeI-hO-zFo"/>
@@ -35,6 +35,7 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="shimmerView" destination="w6m-WZ-pbr" id="igv-LL-62t"/>
             </connections>

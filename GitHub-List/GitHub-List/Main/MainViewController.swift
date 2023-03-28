@@ -17,6 +17,8 @@ class MainViewController: UIViewController {
     
     private var mainTableDataSource: MainTableDataSource!
     
+    private var mode: Mode = .month
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var monthBtn: UIButton!
@@ -31,7 +33,7 @@ class MainViewController: UIViewController {
         self.title = "Details"
         
         setupTableView()
-        presenter.fetcher()
+        monthBtnDidTap()
         
         searchBar.delegate = self
         searchBar.searchTextField.delegate = self
@@ -66,25 +68,48 @@ class MainViewController: UIViewController {
     
     @objc func monthBtnDidTap() {
         presenter.lastMonthSelected()
+        mode = .month
+        setupSelection()
     }
     
     @objc func weekBtnDidtap() {
         presenter.lastWeekSelected()
+        mode = .week
+        setupSelection()
     }
     
     @objc func dayBtnDidTap() {
         presenter.lastDaySelected()
+        mode = .day
+        setupSelection()
     }
     
     @objc func favoriteBtnDidTap() {
         coordinator?.openFavoriteVC()
     }
+    
+    func setupSelection() {
+        switch mode {
+            case .month:
+                monthBtn.isSelected = true
+                weekBtn.isSelected = false
+                dayBtn.isSelected = false
+            case .week:
+                monthBtn.isSelected = false
+                weekBtn.isSelected = true
+                dayBtn.isSelected = false
+            case .day:
+                monthBtn.isSelected = false
+                weekBtn.isSelected = false
+                dayBtn.isSelected = true
+        }
+    }
 }
 
 extension MainViewController: MainViewDelegate {
     func showRepos(repos: [Repository]) {
-        if mainTableDataSource.repos.count > 0 {
-            mainTableDataSource.updateData(repos: repos)
+        if mainTableDataSource.currentRepo.count > 0 {
+            mainTableDataSource.updateData(repos: repos, mode: mode)
         } else {
             mainTableDataSource.setCells(repos: repos)
         }
@@ -99,7 +124,12 @@ extension MainViewController: MainViewDelegate {
     }
     
     func showError(message: String) {
-        
+        let dialogMessage = UIAlertController(title: "", message: message, preferredStyle: .alert)
+        let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
+            self.presenter.fetcher()
+        })
+        dialogMessage.addAction(ok)
+        self.present(dialogMessage, animated: true, completion: nil)
     }
 }
 

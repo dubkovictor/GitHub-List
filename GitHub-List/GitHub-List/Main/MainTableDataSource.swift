@@ -7,6 +7,12 @@
 
 import UIKit
 
+enum Mode {
+    case day
+    case week
+    case month
+}
+
 enum RepoCellType {
     case repoCell(Repository)
     case skeleton
@@ -23,7 +29,10 @@ class MainTableDataSource: NSObject, UITableViewDataSource, UITableViewDelegate 
     
     private var tableView: UITableView
     
-    var repos: [Repository] = []
+    var currentRepo: [Repository] = []
+    var dayRepos: [Repository] = []
+    var weekRepos: [Repository] = []
+    var monthRepos: [Repository] = []
     
     var filteredRepositories = [Repository]()
     
@@ -44,23 +53,39 @@ class MainTableDataSource: NSObject, UITableViewDataSource, UITableViewDelegate 
         return cellType.count
     }
     
-    func updateData(repos: [Repository]) {
+    func updateData(repos: [Repository], mode: Mode) {
         var cells: [RepoCellType] = []
-        for item in repos {
+        self.currentRepo.removeAll()
+        print(mode)
+        cellType.removeAll()
+        switch mode {
+            case .month:
+                monthRepos.append(contentsOf: repos)
+                self.currentRepo = monthRepos
+            case .week:
+                weekRepos.append(contentsOf: repos)
+                self.currentRepo = weekRepos
+            case .day:
+                dayRepos.append(contentsOf: repos)
+                self.currentRepo = dayRepos
+        }
+        
+        for item in self.currentRepo {
             cells.append(.repoCell(item))
         }
-        self.repos.append(contentsOf: repos)
+        
         cellType.append(contentsOf: cells)
+        
         print("load data finished")
+        
         tableView.reloadData()
+        
         isLoading = false
     }
     
     func setCells(repos: [Repository]) {
-        
         cellType.removeAll()
-        
-        self.repos = repos
+        self.currentRepo = repos
         
         if repos.count > 0 {
             for item in repos {
@@ -72,11 +97,11 @@ class MainTableDataSource: NSObject, UITableViewDataSource, UITableViewDelegate 
     
     func resetFilter() {
         filteredRepositories.removeAll()
-        setCells(repos: repos)
+        setCells(repos: currentRepo)
     }
     
     func filterForSearchText(searchText: String) {
-        filteredRepositories = repos.filter { repo in
+        filteredRepositories = currentRepo.filter { repo in
             let searchTextMatch = repo.name.lowercased().contains(searchText.lowercased())
             return searchTextMatch
         }
@@ -107,15 +132,15 @@ class MainTableDataSource: NSObject, UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard repos.count != 0 else { return }
-        catcherController?.didSelectListItem(repos[indexPath.row])
+        guard currentRepo.count != 0 else { return }
+        catcherController?.didSelectListItem(currentRepo[indexPath.row])
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == cellType.count - 4 {
+        if indexPath.row == cellType.count - 5 {
             if !isLoading {
                 isLoading = true
-                print("load data")
+                print("load additionaly data")
                 catcherController?.loadData()
             }
         }

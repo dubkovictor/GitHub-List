@@ -17,6 +17,11 @@ struct APIService: APIServiceProtocol {
     
     func getRepositories(pageNum: String, created: String, completion: @escaping (Result<BaseResponse, APIError>) -> Void) {
         
+        if !Connectivity.isConnectedToInternet() {
+            completion(Result.failure(APIError.connection))
+            return
+        }
+        
         let url = URL(string: urlBase + APIService.pageQueryPageKey + pageNum + "&" + APIService.pageQueryCreatedKey + created)!
         print(url)
         AF.request(url, method: .get).responseDecodable(of: BaseResponse.self) { response in
@@ -32,3 +37,5 @@ struct APIService: APIServiceProtocol {
         }
     }
 }
+
+

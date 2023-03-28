@@ -42,6 +42,7 @@
 		57CB045329D1D312006CD07F /* FavoriteViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CB045229D1D312006CD07F /* FavoriteViewDelegate.swift */; };
 		57CB045529D1D320006CD07F /* FavoritePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CB045429D1D320006CD07F /* FavoritePresenter.swift */; };
 		57CB045729D1D570006CD07F /* FavoriteTableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CB045629D1D570006CD07F /* FavoriteTableDataSource.swift */; };
+		57CB045929D2D949006CD07F /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CB045829D2D949006CD07F /* Connectivity.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,6 +79,7 @@
 		57CB045229D1D312006CD07F /* FavoriteViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewDelegate.swift; sourceTree = "<group>"; };
 		57CB045429D1D320006CD07F /* FavoritePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePresenter.swift; sourceTree = "<group>"; };
 		57CB045629D1D570006CD07F /* FavoriteTableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTableDataSource.swift; sourceTree = "<group>"; };
+		57CB045829D2D949006CD07F /* Connectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connectivity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,6 +181,7 @@
 				57CB043229D09EDE006CD07F /* APIService.swift */,
 				57CB043029D09EA8006CD07F /* APIServiceProtocol.swift */,
 				57CB043429D09F08006CD07F /* APIError.swift */,
+				57CB045829D2D949006CD07F /* Connectivity.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -294,6 +297,7 @@
 			files = (
 				57CB043129D09EA8006CD07F /* APIServiceProtocol.swift in Sources */,
 				57A319A229D048070092A8DE /* MainViewDelegate.swift in Sources */,
+				57CB045929D2D949006CD07F /* Connectivity.swift in Sources */,
 				57CB043729D09F36006CD07F /* APIFetcher.swift in Sources */,
 				57A3199B29D044640092A8DE /* AppStoryboard.swift in Sources */,
 				57A319A029D047D80092A8DE /* MainPresenter.swift in Sources */,
