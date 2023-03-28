@@ -42,7 +42,7 @@ class DetailsViewController: UIViewController {
     private func setupUI() {
         htmlUrlLbl.text = presenter.repository?.htmlURL
         htmlUrlLbl.attributedText = htmlUrlLbl.text?.underLined
-        nameLbl.text = presenter.repository?.name
+        nameLbl.text = "Name: " + (presenter.repository?.name ?? "")
         languageLbl.text = "Language: " + (presenter.repository?.language ?? "")
         numberOfForksLbl.text = "Number of forks: \(presenter.repository?.forksCount ?? 0)"
         creationDateLbl.text = "Creation date: " + (presenter.repository?.createdAt ?? "")

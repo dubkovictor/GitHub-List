@@ -23,7 +23,7 @@ struct APIService: APIServiceProtocol {
         }
         
         let url = URL(string: urlBase + APIService.pageQueryPageKey + pageNum + "&" + APIService.pageQueryCreatedKey + created)!
-        print(url)
+        
         AF.request(url, method: .get).responseDecodable(of: BaseResponse.self) { response in
             do {
                 let decoder = JSONDecoder()
@@ -31,7 +31,6 @@ struct APIService: APIServiceProtocol {
                 let res = try decoder.decode(BaseResponse.self, from: response.data!)
                 completion(Result.success(res))
             } catch {
-                print(error)
                 completion(Result.failure(APIError.parsing(error as? DecodingError)))
             }
         }

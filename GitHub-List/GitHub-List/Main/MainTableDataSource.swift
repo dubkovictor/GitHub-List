@@ -38,14 +38,15 @@ class MainTableDataSource: NSObject, UITableViewDataSource, UITableViewDelegate 
     
     var filteredRepositories = [Repository]()
     
-    var cellType: [RepoCellType] = [.skeleton, .skeleton, .skeleton, .skeleton]
-    var cellTypeMonth: [RepoCellType] = [.skeleton, .skeleton, .skeleton, .skeleton]
-    var cellTypeWeek: [RepoCellType] = [.skeleton, .skeleton, .skeleton, .skeleton]
-    var cellTypeDay: [RepoCellType] = [.skeleton, .skeleton, .skeleton, .skeleton]
+    var cellType: [RepoCellType] = [.skeleton, .skeleton, .skeleton]
+    var cellTypeMonth: [RepoCellType] = []
+    var cellTypeWeek: [RepoCellType] = []
+    var cellTypeDay: [RepoCellType] = []
     
-    var query: String = ""
+    var query = ""
+    var searchText = ""
     
-    var isLoading = false
+    var isLoading = true
     
     init(tableView: UITableView) {
         self.tableView = tableView
@@ -59,60 +60,51 @@ class MainTableDataSource: NSObject, UITableViewDataSource, UITableViewDelegate 
     }
     
     func setMonthCells(repos: [Repository]) {
-        if monthRepos.count == 0 {
-            cellTypeMonth.removeAll()
+        cellType.removeAll()
+        for item in repos {
+            cellTypeMonth.append(.repoCell(item))
         }
-    
-        monthRepos = repos
-        currentRepo = monthRepos
-        if repos.count > 0 {
-            for item in repos {
-                cellTypeMonth.append(.repoCell(item))
-            }
-        }
-        mode = .month
-        cellType = cellTypeMonth
-        tableView.reloadData()
-        
+        monthRepos.append(contentsOf: repos)
+        showMonth()
         isLoading = false
     }
     
     func setWeekCells(repos: [Repository]) {
-        if weekRepos.count == 0 {
-            cellTypeWeek.removeAll()
+        cellType.removeAll()
+        for item in repos {
+            cellTypeWeek.append(.repoCell(item))
         }
-        
-        weekRepos = repos
-        currentRepo = weekRepos
-        if repos.count > 0 {
-            for item in repos {
-                cellTypeWeek.append(.repoCell(item))
-            }
-        }
-        mode = .week
-        cellType = cellTypeWeek
-        tableView.reloadData()
-        
+        weekRepos.append(contentsOf: repos)
         isLoading = false
+        showWeek()
     }
     
     func setDayCells(repos: [Repository]) {
-        if dayRepos.count == 0 {
-            cellTypeDay.removeAll()
+        cellType.removeAll()
+        for item in repos {
+            cellTypeDay.append(.repoCell(item))
         }
-        
-        dayRepos = repos
+        dayRepos.append(contentsOf: repos)
+        isLoading = false
+        showDay()
+    }
+    
+    func showMonth() {
+        currentRepo = monthRepos
+        cellType = cellTypeMonth
+        tableView.reloadData()
+    }
+    
+    func showWeek() {
+        currentRepo = weekRepos
+        cellType = cellTypeWeek
+        tableView.reloadData()
+    }
+    
+    func showDay() {
         currentRepo = dayRepos
-        if repos.count > 0 {
-            for item in repos {
-                cellTypeDay.append(.repoCell(item))
-            }
-        }
-        mode = .day
         cellType = cellTypeDay
         tableView.reloadData()
-        
-        isLoading = false
     }
 
     func resetFilter() {
@@ -125,9 +117,12 @@ class MainTableDataSource: NSObject, UITableViewDataSource, UITableViewDelegate 
             case .day:
                 setDayCells(repos: currentRepo)
         }
+        searchText = ""
     }
     
     func filterForSearchText(searchText: String) {
+        self.searchText = searchText
+        
         filteredRepositories = currentRepo.filter { repo in
             let searchTextMatch = repo.name.lowercased().contains(searchText.lowercased())
             return searchTextMatch
@@ -138,6 +133,8 @@ class MainTableDataSource: NSObject, UITableViewDataSource, UITableViewDelegate 
             for item in filteredRepositories {
                 cellType.append(.repoCell(item))
             }
+        } else {
+            cellType.removeAll()
         }
         tableView.reloadData()
     }
@@ -164,10 +161,9 @@ class MainTableDataSource: NSObject, UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == cellType.count - 5 {
+        if indexPath.row == currentRepo.count - 2 {
             if !isLoading {
                 isLoading = true
-                print("load additionaly data")
                 catcherController?.loadData()
             }
         }

@@ -19,12 +19,14 @@ class MainPresenter {
     
     private var apiFetcher = APIFetcher()
     
-    private var dateQuery: String = ""
+    var dayRepos: [Repository] = []
+    var weekRepos: [Repository] = []
+    var monthRepos: [Repository] = []
     
-    private var currentRange: Range = .month
+    var currentRange: Range = .month
     
     private var currentPageNumber = 1
-    private var pageNumberMonth = 1
+    private var pageNumberMonth = 0
     private var pageNumberWeek = 1
     private var pageNumberDay = 1
     
@@ -37,42 +39,52 @@ class MainPresenter {
     }
     
     func fetcher() {
-        apiFetcher.fetchRepositories(pageNum: "\(currentPageNumber)", created: dateQuery)
+        apiFetcher.fetchRepositories(pageNum: "\(currentPageNumber)", created: currentDateRange())
     }
-    
+
     func loadData() {
-        
         switch currentRange {
             case .month:
                 pageNumberMonth = pageNumberMonth + 1
                 currentPageNumber = pageNumberMonth
             case .week:
-                pageNumberWeek = pageNumberWeek + 1
                 currentPageNumber = pageNumberWeek
+                pageNumberWeek = pageNumberWeek + 1
             case .day:
-                pageNumberDay = pageNumberDay + 1
                 currentPageNumber = pageNumberDay
+                pageNumberDay = pageNumberDay + 1
         }
         
         fetcher()
     }
     
-    func lastMonthSelected() {
-        currentRange = .month
-        dateQuery = dateRange(range: .month) + ".." + today()
-        fetcher()
+    func loadMonth() {
+        if monthRepos.count == 0 {
+            loadData()
+        }
     }
     
-    func lastWeekSelected() {
-        currentRange = .week
-        dateQuery = dateRange(range: .week) + ".." + today()
-        fetcher()
+    func loadWeek() {
+        if weekRepos.count == 0 {
+            loadData()
+        }
     }
     
-    func lastDaySelected() {
-        currentRange = .day
-        dateQuery = dateRange(range: .day) + ".." + today()
-        fetcher()
+    func loadDay() {
+        if dayRepos.count == 0 {
+            loadData()
+        }
+    }
+    
+    func currentDateRange() -> String {
+        switch currentRange {
+            case .month:
+                return dateRange(range: .month) + ".." + today()
+            case .week:
+                return dateRange(range: .week) + ".." + today()
+            case .day:
+                return dateRange(range: .day) + ".." + today()
+        }
     }
     
     private func dateRange(range: Range) -> String {
@@ -116,6 +128,7 @@ class MainPresenter {
 }
 
 extension MainPresenter: APIFetcherDelegate {
+    
     func showError(message: String) {
         viewDelegate?.showError(message: message)
     }

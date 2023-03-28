@@ -19,6 +19,8 @@ class MainViewController: UIViewController {
     
     private var mode: Mode = .month
     
+    private var isSearchBarActive = false
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var monthBtn: UIButton!
@@ -67,21 +69,46 @@ class MainViewController: UIViewController {
     }
     
     @objc func monthBtnDidTap() {
-        presenter.lastMonthSelected()
         mode = .month
+        presenter.currentRange = .month
         setupSelection()
+        presenter.loadMonth()
+        
+        if isSearchBarActive {
+            mainTableDataSource.resetFilter()
+            searchBarEndEditing()
+        }
+        
+        mainTableDataSource.showMonth()
     }
     
     @objc func weekBtnDidtap() {
-        presenter.lastWeekSelected()
         mode = .week
+        presenter.currentRange = .week
         setupSelection()
+        presenter.loadWeek()
+        
+        if isSearchBarActive {
+            mainTableDataSource.resetFilter()
+            searchBarEndEditing()
+        }
+        
+        mainTableDataSource.showWeek()
+        
     }
     
     @objc func dayBtnDidTap() {
-        presenter.lastDaySelected()
         mode = .day
+        presenter.currentRange = .day
         setupSelection()
+        presenter.loadDay()
+        
+        if isSearchBarActive {
+            mainTableDataSource.resetFilter()
+            searchBarEndEditing()
+        }
+        
+        mainTableDataSource.showDay()
     }
     
     @objc func favoriteBtnDidTap() {
@@ -104,24 +131,27 @@ class MainViewController: UIViewController {
                 dayBtn.isSelected = true
         }
     }
+    
+    func searchBarEndEditing() {
+        isSearchBarActive = false
+        searchBar.endEditing(true)
+        searchBar.text = ""
+    }
 }
 
 extension MainViewController: MainViewDelegate {
     func showRepos(repos: [Repository]) {
-        
         switch mode {
             case .month:
+                presenter.monthRepos = repos
                 mainTableDataSource.setMonthCells(repos: repos)
             case .week:
+                presenter.weekRepos = repos
                 mainTableDataSource.setWeekCells(repos: repos)
             case .day:
+                presenter.dayRepos = repos
                 mainTableDataSource.setDayCells(repos: repos)
         }
-//        if mainTableDataSource.currentRepo.count > 0 {
-//            mainTableDataSource.updateData(repos: repos, mode: mode)
-//        } else {
-//            mainTableDataSource.setCells(repos: repos)
-//        }
     }
     
     func showProgress(show: Bool) {
@@ -143,14 +173,18 @@ extension MainViewController: MainViewDelegate {
 }
 
 extension MainViewController: UISearchBarDelegate, UITextFieldDelegate {
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.count > 0 {
             mainTableDataSource.filterForSearchText(searchText: searchText)
         }
+        
+        isSearchBarActive = true
     }
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
         mainTableDataSource.resetFilter()
+        isSearchBarActive = false
         return true
     }
 }

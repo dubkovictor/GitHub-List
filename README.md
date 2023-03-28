@@ -17,8 +17,10 @@ Take the patented model-view-presenter as the basis. Navigation through the appl
 - The popular Kingfisher library is used to work with images. Allows you to cache images.
 
 ## Optimization - potential improvements
+- 
 - It is better to make requests to the server asynchronous (async await)
 - When working with the Realm database, you should always keep an eye on the threads. @MainActor async functions.
+- Add check for uniqueness to favorites.
 
 ## Additionally
 Сan use SwiftLint to organize your code in a cleaner

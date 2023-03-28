@@ -24,14 +24,14 @@
                             <constraint firstAttribute="width" constant="40" id="Ohm-Gd-kNL"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jsl-ac-xVg">
-                        <rect key="frame" x="66" y="16" width="244" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="jsl-ac-xVg">
+                        <rect key="frame" x="66" y="15.999999999999998" width="244" height="20.333333333333329"/>
                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l0e-Q6-wA5">
-                        <rect key="frame" x="66" y="39" width="244" height="17"/>
+                        <rect key="frame" x="66" y="39.333333333333336" width="244" height="17"/>
                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -53,8 +53,8 @@
                     <constraint firstAttribute="trailing" secondItem="jsl-ac-xVg" secondAttribute="trailing" constant="10" id="XC6-bU-cSW"/>
                     <constraint firstItem="oqj-ql-4j7" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="d1g-2r-BuW"/>
                     <constraint firstAttribute="trailing" secondItem="aOK-hN-m2i" secondAttribute="trailing" constant="10" id="dFf-XP-NMb"/>
-                    <constraint firstItem="l0e-Q6-wA5" firstAttribute="bottom" secondItem="oqj-ql-4j7" secondAttribute="bottom" id="o8E-OG-xpw"/>
                     <constraint firstAttribute="trailing" secondItem="l0e-Q6-wA5" secondAttribute="trailing" constant="10" id="qBR-PQ-P5y"/>
+                    <constraint firstItem="l0e-Q6-wA5" firstAttribute="top" secondItem="jsl-ac-xVg" secondAttribute="bottom" constant="3" id="vse-9T-8bN"/>
                     <constraint firstItem="jsl-ac-xVg" firstAttribute="leading" secondItem="oqj-ql-4j7" secondAttribute="trailing" constant="10" id="zIE-zD-mCq"/>
                 </constraints>
             </tableViewCellContentView>

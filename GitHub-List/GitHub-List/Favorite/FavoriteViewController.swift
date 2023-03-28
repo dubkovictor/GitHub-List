@@ -48,7 +48,6 @@ class FavoriteViewController: UIViewController {
 
 extension FavoriteViewController: FavoriteViewDelegate {
     func showRepos(repos: [RepositoryObject]) {
-        print(repos)
         favoriteTableDataSource.setCells(repos: repos)
     }
 }
